@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FindMate - Find Your Vibe, Find Your Mate</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- 1. Cài đặt Biến & Reset CSS --- */
+        :root {
+            --bg-color: #fcfcf9;
+            --text-color: #333;
+            --primary-color: #006A4E; /* Xanh đậm từ chữ FindMate */
+            --accent-color: #F9A825;  /* Vàng từ logo */
+            --card-bg: #FFFFFF;
+            --nav-bg: rgba(255, 255, 255, 0.85);
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+            --border-color: #eee;
+            --hero-overlay: rgba(0, 0, 0, 0.2);
+            --hero-text: #FFFFFF;
+        }
+
+        html.dark {
+            --bg-color: #0A192F;      /* Xanh navy đậm từ poster */
+            --text-color: #E0E0E0;
+            --primary-color: #8BC34A; /* Xanh lá nhạt từ logo */
+            --accent-color: #FDEBCF;
+            --card-bg: #1D2A43;
+            --nav-bg: rgba(29, 42, 67, 0.85);
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            --border-color: #3a4a6b;
+            --hero-overlay: rgba(0, 0, 0, 0.5);
+            --hero-text: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            line-height: 1.6;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--accent-color);
+        }
+
+        section {
+            padding: 80px 5%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        h1 { font-size: 3rem; }
+        h2 { font-size: 2.2rem; text-align: center; }
+        h3 { font-size: 1.5rem; color: var(--accent-color); }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        /* Ẩn ngôn ngữ không được chọn */
+        [lang="en"] { display: none; }
+
+        /* --- 2. Header & Navigation --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .controls button {
+            background: none;
+            border: 2px solid var(--border-color);
+            color: var(--text-color);
+            cursor: pointer;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        #lang-toggle {
+            margin-right: 10px;
+            padding: 0 10px;
+            width: auto;
+        }
+        
+        #dark-mode-toggle {
+            font-size: 1.2rem;
+        }
+
+        .controls button:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #fff;
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        /* --- 3. Hero Section --- */
+        #hero {
+            height: 100vh;
+            min-height: 600px;
+            background-image: linear-gradient(var(--hero-overlay), var(--hero-overlay)), url('FINDMATE-facebook cover.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--hero-text);
+            padding: 0 5%;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--hero-text);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            font-weight: 500;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        /* --- 4. About Section --- */
+        #about .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .about-text ul {
+            list-style: none;
+            margin-top: 20px;
+        }
+        
+        .about-text li {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .about-text li i {
+            color: var(--accent-color);
+            margin-right: 15px;
+            font-size: 1.2rem;
+            margin-top: 4px;
+        }
+        
+        .about-image {
+            text-align: center;
+        }
+        
+        .about-image img {
+            max-width: 80%;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        /* --- 5. Problem Section --- */
+        #problem {
+            background-color: var(--card-bg);
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .problem-card {
+            background-color: var(--bg-color);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .problem-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .problem-card i {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        
+        .problem-card h3 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        
+        .solution {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid var(--accent-color);
+        }
+        
+        .solution strong {
+            color: var(--primary-color);
+        }
+
+        /* --- 6. Core Values Section --- */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .value-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .value-card .icon {
+            font-size: 4rem;
+            padding: 40px 20px 20px 20px;
+            color: var(--accent-color);
+        }
+
+        .value-card h3 {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+            font-size: 1.4rem;
+        }
+        
+        .value-card p {
+            padding: 30px;
+            font-size: 0.95rem;
+        }
+
+        /* --- 7. Advantages Section --- */
+        #advantages {
+            background-color: var(--card-bg);
+        }
+        
+        .advantages-list {
+            max-width: 900px;
+            margin: 40px auto 0;
+            list-style: none;
+        }
+        
+        .advantages-list li {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+        
+        .advantages-list li:hover {
+            transform: translateX(10px);
+        }
+        
+        .advantages-list i {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-right: 20px;
+            width: 40px;
+            text-align: center;
+        }
+
+        /* --- 8. SWOT Section --- */
+        .swot-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .swot-card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid;
+        }
+
+        .swot-card h3 {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .swot-card ul {
+            list-style: none;
+        }
+
+        .swot-card li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+        }
+        
+        .swot-card li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 7px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        
+        /* Gán màu cho từng loại SWOT */
+        #swot-s { border-color: #4CAF50; } /* Green */
+        #swot-s h3 { color: #4CAF50; }
+        #swot-s li::before { background-color: #4CAF50; }
+
+        #swot-w { border-color: #FFC107; } /* Amber */
+        #swot-w h3 { color: #FFC107; }
+        #swot-w li::before { background-color: #FFC107; }
+
+        #swot-o { border-color: #03A9F4; } /* Blue */
+        #swot-o h3 { color: #03A9F4; }
+        #swot-o li::before { background-color: #03A9F4; }
+
+        #swot-t { border-color: #F44336; } /* Red */
+        #swot-t h3 { color: #F44336; }
+        #swot-t li::before { background-color: #F44336; }
+
+
+        /* --- 9. CTA Section --- */
+        #cta {
+            background-color: var(--primary-color);
+            text-align: center;
+            color: #fff;
+        }
+        
+        #cta h2 {
+            color: #fff;
+        }
+        
+        #cta p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+        
+        .cta-button {
+            background-color: var(--accent-color);
+            color: #333;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: #fff;
+            color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        /* --- 10. Footer --- */
+        footer {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 5%;
+            text-align: center;
+        }
+        
+        .footer-logo img {
+            height: 50px;
+            margin-bottom: 15px;
+        }
+        
+        .social-links {
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+        }
+
+
+        /* --- 11. Responsive Design --- */
+        @media (max-width: 992px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 1.8rem; }
+            #hero h1 { font-size: 3rem; }
+            #hero p { font-size: 1.2rem; }
+
+            .problem-grid,
+            .values-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px; /* Chiều cao header */
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--bg-color);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 50px;
+                transition: left 0.4s ease-in-out;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 20px 0;
+                font-size: 1.2rem;
+            }
+
+            .menu-toggle {
+                display: block;
+                margin-left: 20px;
+            }
+            
+            .controls {
+                /* Đẩy nút control sang phải, bỏ menu-toggle ra ngoài */
+                margin-left: auto;
+            }
+            
+            nav {
+                justify-content: space-between;
+            }
+
+            #about .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                margin-top: 30px;
+            }
+
+            .problem-grid,
+            .values-grid,
+            .swot-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="#hero" class="logo">
+                <img src="FINDMATE.png" alt="FindMate Logo">
+                <span>FindMate</span>
+            </a>
+            
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#about">
+                    <span lang="vi">Giới thiệu</span>
+                    <span lang="en">About</span>
+                </a></li>
+                <li><a href="#problem">
+                    <span lang="vi">Vấn đề</span>
+                    <span lang="en">Problem</span>
+                </a></li>
+                <li><a href="#core-values">
+                    <span lang="vi">Giá trị</span>
+                    <span lang="en">Values</span>
+                </a></li>
+                <li><a href="#advantages">
+                    <span lang="vi">Lợi thế</span>
+                    <span lang="en">Advantages</span>
+                </a></li>
+                <li><a href="#cta">
+                    <span lang="vi">Đăng ký</span>
+                    <span lang="en">Register</span>
+                </a></li>
+            </ul>
+            
+            <div class="controls">
+                <button id="lang-toggle">EN</button>
+                <button id="dark-mode-toggle">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button class="menu-toggle" id="menu-toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <section id="hero">
+            <div class="hero-content">
+                <h1>FINDMATE</h1>
+                <p>"Find your vibe - Find your mate."</p>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="container">
+                <div class="about-text">
+                    <h2>
+                        <span lang="vi">FindMate là gì?</span>
+                        <span lang="en">What is FindMate?</span>
+                    </h2>
+                    <p>
+                        <span lang="vi">FindMate là nền tảng kết nối và ghép nhóm trực tuyến, giúp sinh viên và người trẻ tìm được bạn đồng hành phù hợp cho mọi hoạt động.</span>
+                        <span lang="en">FindMate is an online connection and group-matching platform, helping students and young people find suitable companions for all activities.</span>
+                    </p>
+                    <ul>
+                        <li><i class="fa-solid fa-bullseye"></i>
+                            <div>
+                                <strong><span lang="vi">Mục tiêu:</span><span lang="en">Goal:</span></strong>
+                                <span lang="vi"> Xây dựng cộng đồng kết nối tích cực, giúp bạn tìm "mate" để học tập, thể thao, hoặc đi chơi.</span>
+                                <span lang="en"> Build a positive, connected community, helping you find a "mate" for studying, sports, or leisure.</span>
+                            </div>
+                        </li>
+                        <li><i class="fa-solid fa-users"></i>
+                            <div>
+                                <strong><span lang="vi">Loại hình:</span><span lang="en">Type:</span></strong>
+                                <span lang="vi"> Dịch vụ Social Matching (ghép đôi xã hội), không phải hẹn hò.</span>
+                                <span lang="en"> Social Matching Service, not a dating app.</span>
+                            </div>
+                        </li>
+                         <li><i class="fa-solid fa-heart"></i>
+                            <div>
+                                <strong><span lang="vi">Khẩu hiệu:</span><span lang="en">Slogan:</span></strong>
+                                <span> “Find your vibe - Find your mate.”</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="about-image">
+                    <img src="FINDMATE.png" alt="FindMate Logo Illustration">
+                </div>
+            </div>
+        </section>
+
+        <section id="problem">
+            <div class="container">
+                <h2>
+                    <span lang="vi">Bối cảnh & Vấn đề</span>
+                    <span lang="en">Context & The Problem</span>
+                </h2>
+                <p style="text-align: center; max-width: 800px; margin: 10px auto 0 auto;">
+                    <span lang="vi">Giữa nhịp sống hối hả, giới trẻ đang dần mất kết nối thực tế. FindMate ra đời để giải quyết những khó khăn này.</span>
+                    <span lang="en">In today's fast-paced life, young people are losing real-world connections. FindMate was born to solve these difficulties.</span>
+                </p>
+
+                <div class="problem-grid">
+                    <div class="problem-card">
+                        <i class="fa-solid fa-clock"></i>
+                        <h3>
+                            <span lang="vi">Khó tìm người cùng lịch rảnh</span>
+                            <span lang="en">Hard to Find People with Free Time</span>
+                        </h3>
+                        <p>
+                            <span lang="vi">Muốn học nhóm, chơi thể thao nhưng bạn bè đều bận, dẫn đến mất động lực.</span>
+                            <span lang="en">Want to study or play sports, but friends are busy, leading to a loss of motivation.</span>
+                        </p>
+                        <div class="solution">
+                            <strong><span lang="vi">Giải pháp:</span><span lang="en">Solution:</span></strong>
+                            <span lang="vi"> Hệ thống lọc thông minh theo thời gian rảnh và mục tiêu cụ thể.</span>
+                            <span lang="en"> Smart filtering system based on free time and specific goals.</span>
+                        </div>
+                    </div>
+                    
+                    <div class="problem-card">
+                        <i class="fa-solid fa-comments"></i>
+                        <h3>
+                            <span lang="vi">Ngại kết bạn trực tiếp</span>
+                            <span lang="en">Shy About Making Friends Directly</span>
+                        </h3>
+                        <p>
+                            <span lang="vi">Môi trường mới (đại học, công ty) khiến việc bắt chuyện trở nên khó khăn, thiếu cơ hội giao tiếp.</span>
+                            <span lang="en">New environments (university, workplace) make it hard to start conversations, lacking communication opportunities.</span>
+                        </p>
+                        <div class="solution">
+                            <strong><span lang="vi">Giải pháp:</span><span lang="en">Solution:</span></strong>
+                            <span lang="vi"> Tạo một môi trường "có sẵn", thân thiện, nơi mọi người đều chung mục đích kết nối.</span>
+                            <span lang="en"> Create a friendly, "ready-made" environment where everyone shares the purpose of connecting.</span>
+                        </div>
+                    </div>
+                    
+                    <div class="problem-card">
+                        <i class="fa-solid fa-user-shield"></i>
+                        <h3>
+                            <span lang="vi">Sợ các app "ảo", bị "leo cây"</span>
+                            <span lang="en">Fear of "Virtual" Apps & Getting Flaked On</span>
+                        </h3>
+                        <p>
+                            <span lang="vi">Mất niềm tin vào các nền tảng vì bị "bể kèo", lừa đảo, hoặc mục đích không lành mạnh (dating trá hình).</span>
+                            <span lang="en">Losing trust in platforms due to canceled plans, scams, or unhealthy hidden motives (disguised dating).</span>
+                        </p>
+                        <div class="solution">
+                            <strong><span lang="vi">Giải pháp:</span><span lang="en">Solution:</span></strong>
+                            <span lang="vi"> Tập trung vào học/chơi, không dating. Mô hình có phí tạo động lực và hạn chế "bể kèo".</span>
+                            <span lang="en"> Focus on study/play, not dating. A paid model creates commitment and reduces flaking.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="core-values">
+            <div class="container">
+                <h2>
+                    <span lang="vi">Giá trị cốt lõi</span>
+                    <span lang="en">Core Values</span>
+                </h2>
+                
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="icon"><i class="fa-solid fa-people-group"></i></div>
+                        <h3>
+                            <span lang="vi">Kết nối lành mạnh</span>
+                            <span lang="en">Healthy Connection</span>
+                        </h3>
+                        <p>
+                            <span lang="vi">FindMate không phải app hẹn hò. Chúng tôi tập trung vào kết nối nhóm (học tập, thể thao) trong một môi trường an toàn, thân thiện.</span>
+                            <span lang="en">FindMate is not a dating app. We focus on group connections (study, sports) in a safe and friendly environment.</span>
+                        </p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <div class="icon"><i class="fa-solid fa-handshake-simple"></i></div>
+                        <h3>
+                            <span lang="vi">Tương tác thật</span>
+                            <span lang="en">Real Interaction</span>
+                        </h3>
+                        <p>
+                            <span lang="vi">Chúng tôi khuyến khích tạo nhóm thật - gặp gỡ thật - hoạt động thật, giúp bạn mở rộng mối quan hệ ngoài đời thực.</span>
+                            <span lang="en">We encourage real groups, real meetings, and real activities, helping you expand your real-life social circle.</span>
+                        </p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <div class="icon"><i class="fa-solid fa-seedling"></i></div>
+                        <h3>
+                            <span lang="vi">Cộng đồng tích cực</span>
+                            <span lang="en">Positive Community</span>
+                        </h3>
+                        <p>
+                            <span lang="vi">Đây là nơi mọi người cùng nhau phát triển kỹ năng, duy trì thói quen lành mạnh và giúp nhau cùng tiến bộ.</span>
+                            <span lang="en">This is a place where people develop skills, maintain healthy habits, and help each other progress together.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="advantages">
+            <div class="container">
+                <h2>
+                    <span lang="vi">Lợi thế cạnh tranh</span>
+                    <span lang="en">Competitive Advantage</span>
+                </h2>
+                
+                <ul class="advantages-list">
+                    <li>
+                        <i class="fa-solid fa-check-double"></i>
+                        <p>
+                            <span lang="vi"><strong>Đúng nhu cầu:</strong> Tập trung vào nhu cầu thực tế của người Việt trẻ (học, thể thao) thay vì hẹn hò.</span>
+                            <span lang="en"><strong>Right Focus:</strong> Targets the real needs of young Vietnamese (study, sports) instead of dating.</span>
+                        </p>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <p>
+                            <span lang="vi"><strong>An toàn, tin cậy cao:</strong> Không mang yếu tố "dating", giảm rủi ro tiêu cực, tạo niềm tin cho người dùng.</span>
+                            <span lang="en"><strong>Safe & Trustworthy:</strong> No "dating" elements, reducing negative risks and building user trust.</span>
+                        </p>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+                        <p>
+                            <span lang="vi"><strong>Đơn giản & hiệu quả:</strong> Giao diện thân thiện, hoạt động theo nhóm nhỏ, dễ kết bạn và duy trì lâu dài.</span>
+                            <span lang="en"><strong>Simple & Effective:</strong> Friendly UI, operates in small groups,
+                            making it easy to make and maintain friendships.</span>
+                        </p>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-school"></i>
+                        <p>
+                            <span lang="vi"><strong>Phù hợp triển khai:</strong> Lý tưởng cho môi trường học đường và các công ty có văn hóa trẻ.</span>
+                            <span lang="en"><strong>Perfectly Deployable:</strong> Ideal for academic environments and companies with a young culture.</span>
+                        </p>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-chart-line"></i>
+                        <p>
+                            <span lang="vi"><strong>Phát triển bền vững:</strong> Dễ dàng mở rộng thành nền tảng hỗ trợ sức khỏe tinh thần và kết nối xã hội.</span>
+                            <span lang="en"><strong>Sustainable Growth:</strong> Easily expandable into a platform for mental wellness and social connection.</span>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="swot">
+            <div class="container">
+                <h2>
+                    <span lang="vi">Phân tích SWOT</span>
+                    <span lang="en">SWOT Analysis</span>
+                </h2>
+                <div class="swot-grid">
+                    <div class="swot-card" id="swot-s">
+                        <h3><span lang="vi">S - Điểm mạnh (Strengths)</span><span lang="en">S - Strengths</span></h3>
+                        <ul>
+                            <li><span lang="vi">Ý tưởng mới lạ, lành mạnh, khác biệt.</span><span lang="en">New, healthy, and different concept.</span></li>
+                            <li><span lang="vi">Hướng đến giới trẻ năng động.</span><span lang="en">Targets the dynamic youth demographic.</span></li>
+                            <li><span lang="vi">Mở rộng linh hoạt (học, thể thao, du lịch).</span><span lang="en">Flexible expansion (study, sports, travel).</span></li>
+                            <li><span lang="vi">Giao diện đơn giản, dễ sử dụng.</span><span lang="en">Simple and user-friendly interface.</span></li>
+                        </ul>
+                    </div>
+                    <div class="swot-card" id="swot-w">
+                        <h3><span lang="vi">W - Điểm yếu (Weaknesses)</span><span lang="en">W - Weaknesses</span></h3>
+                        <ul>
+                            <li><span lang="vi">Khó thu hút người dùng ban đầu.</span><span lang="en">Difficulty attracting initial users.</span></li>
+                            <li><span lang="vi">Cần kiểm duyệt kỹ hồ sơ.</span><span lang="en">Requires careful profile moderation.</span></li>
+                            <li><span lang="vi">Chi phí marketing cao để tạo tin cậy.</span><span lang="en">High marketing cost to build trust.</span></li>
+                        </ul>
+                    </div>
+                    <div class="swot-card" id="swot-o">
+                        <h3><span lang="vi">O - Cơ hội (Opportunities)</span><span lang="en">O - Opportunities</span></h3>
+                        <ul>
+                            <li><span lang="vi">Xu hướng kết nối "no dating app" đang
+                            được ưa chuộng.</span><span lang="en">The "no dating app" connection trend is popular.</span></li>
+                            <li><span lang="vi">Thị trường đại học, công sở trẻ rất lớn.</span><span lang="en">Huge potential market in universities and young offices.</span></li>
+                            <li><span lang="vi">Có thể kết hợp tổ chức sự kiện offline.</span><span lang="en">Can be combined with organizing offline events.</span></li>
+                        </ul>
+                    </div>
+                    <div class="swot-card" id="swot-t">
+                        <h3><span lang="vi">T - Thách thức (Threats)</span><span lang="en">T - Threats</span></h3>
+                        <ul>
+                            <li><span lang="vi">Cạnh tranh với Facebook Group, Discord.</span><span lang="en">Competition from Facebook Groups, Discord.</span></li>
+                            <li><span lang="vi">Người dùng dễ hiểu lầm mục đích.</span><span lang="en">Users might misunderstand the purpose (as dating).</span></li>
+                            <li><span lang="vi">Cần bảo vệ dữ liệu cá nhân chặt chẽ.</span><span lang="en">Strict personal data protection is required.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta">
+            <div class="container">
+                <h2>
+                    <span lang="vi">Tìm "Vibe", Gặp "Mate" Ngay!</span>
+                    <span lang="en">Find Your "Vibe", Meet Your "Mate" Now!</span>
+                </h2>
+                <p>
+                    <span lang="vi">Đừng để sự cô đơn cản trở bạn. Hãy tham gia cộng đồng FindMate để tìm những người bạn đồng hành tuyệt vời cho học tập, thể thao và cuộc sống.</span>
+                    <span lang="en">Don't let loneliness hold you back. Join the FindMate community to find amazing companions for study, sports, and life.</span>
+                </p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSe95seO5lCM4y4dZin0mB59UO9p1ZV3TruzOU6YH4hJ8UhJbA/viewform?usp=dialog" class="cta-button" target="_blank">
+                    <span lang="vi">Đăng ký tham gia</span>
+                    <span lang="en">Register Now</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                <img src="FINDMATE.png" alt="FindMate Logo">
+            </div>
+            <div class="social-links">
+                <a href="#" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+            </div>
+            <p class="copyright">
+                © 2025 FindMate. All rights reserved. "Find your vibe - Find your mate."
+            </p>
+        </div>
+    </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const html = document.documentElement;
+            
+            // --- 1. Dark Mode Toggle ---
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const themeIcon = darkModeToggle.querySelector('i');
+            
+            // Kiểm tra theme đã lưu
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                html.classList.add('dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                html.classList.remove('dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+
+            darkModeToggle.addEventListener('click', () => {
+                html.classList.toggle('dark');
+                if (html.classList.contains('dark')) {
+                    localStorage.setItem('theme', 'dark');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            });
+
+            // --- 2. Language Toggle ---
+            const langToggle = document.getElementById('lang-toggle');
+            
+            // Kiểm tra ngôn ngữ đã lưu
+            let currentLang = localStorage.getItem('lang') || 'vi'; // Mặc định là 'vi'
+            updateLang(currentLang);
+
+            langToggle.addEventListener('click', () => {
+                currentLang = (currentLang === 'vi') ? 'en' : 'vi';
+                localStorage.setItem('lang', currentLang);
+                updateLang(currentLang);
+            });
+
+            function updateLang(lang) {
+                html.setAttribute('lang', lang);
+                
+                // Ẩn/hiện các phần tử theo ngôn ngữ
+                document.querySelectorAll('[lang="vi"]').forEach(el => {
+                    el.style.display = (lang === 'vi') ? 'inline' : 'none'; // 'inline' hoặc 'block' tùy
+                });
+                document.querySelectorAll('[lang="en"]').forEach(el => {
+                    el.style.display = (lang === 'en') ? 'inline' : 'none';
+                });
+                
+                // Xử lý riêng cho các element cần 'display: block'
+                // (ví dụ: các thẻ p, h2, li trong các section)
+                document.querySelectorAll('section [lang="vi"], section [lang="en"], .nav-links [lang="vi"], .nav-links [lang="en"]').forEach(el => {
+                     el.style.display = (el.getAttribute('lang') === lang) ? 'block' : 'none';
+                });
+                
+                // Cập nhật text nút
+                langToggle.textContent = (lang === 'vi') ? 'EN' : 'VI';
+            }
+            
+            // --- 3. Mobile Menu ---
+            const menuToggle = document.getElementById('menu-toggle');
+            const navLinks = document.getElementById('nav-links');
+            
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+            
+            // Đóng menu khi click vào 1 link
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                });
+            });
+
+        });
+    </script>
+
+</body>
+</html>
